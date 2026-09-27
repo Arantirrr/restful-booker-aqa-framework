@@ -24,9 +24,16 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements-dev.txt
 
-      - name: Run tests
+      - name: Run smoke tests
         env:
           API_URL: ${{ secrets.API_URL }}
           ADMIN_USERNAME: ${{ secrets.ADMIN_USERNAME }}
           ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
-        run: pytest -v tests/
+        run: pytest -v -m smoke
+
+      - name: Run regression tests
+        env:
+          API_URL: ${{ secrets.API_URL }}
+          ADMIN_USERNAME: ${{ secrets.ADMIN_USERNAME }}
+          ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
+        run: pytest -v -m regression
