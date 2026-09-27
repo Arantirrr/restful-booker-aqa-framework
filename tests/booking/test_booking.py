@@ -58,7 +58,7 @@ def test_create_booking_invalid_data(booking_payload_factory, missing_field, exp
     assert response.status_code == requests.codes.bad, f"Expected status 400, got {response.status_code}"
     assert response.headers["Content-Type"] == "application/json", f"Expected 'application/json', got {response.headers['Content-Type']}"
     response_errors = ValidationErrorResponse.model_validate(response.json())
-    assert response_errors.errors == expected_error
+    assert sorted(response_errors.errors) == sorted(expected_error)
 
 @pytest.mark.regression
 @pytest.mark.negative
